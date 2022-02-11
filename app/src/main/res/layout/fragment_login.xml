@@ -53,6 +53,7 @@
             android:textColor="@color/grey_1" />
 
         <TextView
+            android:id="@+id/createnewpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/loginbtn"

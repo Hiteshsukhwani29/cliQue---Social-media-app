@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import com.google.android.gms.tasks.Task
@@ -19,6 +20,8 @@ class Login : Fragment() {
 
     lateinit var et_email: EditText
     lateinit var et_password: EditText
+    lateinit var tv_forgotpassword: TextView
+    lateinit var tv_createnewpassword: TextView
     lateinit var btn_login: Button
 
     lateinit var mAuth: FirebaseAuth
@@ -29,13 +32,18 @@ class Login : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.fragment_login, container, false)
-        mAuth = FirebaseAuth.getInstance();
-        et_email = v.findViewById(R.id.login_email);
-        et_password = v.findViewById(R.id.login_password);
+        mAuth = FirebaseAuth.getInstance()
+        et_email = v.findViewById(R.id.login_email)
+        et_password = v.findViewById(R.id.login_password)
+        tv_forgotpassword = v.findViewById(R.id.forgotpassword)
+        tv_createnewpassword = v.findViewById(R.id.createnewpassword)
         btn_login = v.findViewById(R.id.loginbtn);
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance()
 
         btn_login.setOnClickListener(View.OnClickListener { login() })
+
+        tv_createnewpassword.setOnClickListener(View.OnClickListener { requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container1, SignUp()).commit() })
 
         return v
     }
@@ -46,14 +54,14 @@ class Login : Fragment() {
             et_email.requestFocus()
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches()) {
-            et_email.setError("Please provide a valid email");
+            et_email.setError("Please provide a valid email")
             et_email.requestFocus();
             return;
         }
 
         if (et_password.text.isEmpty()) {
-            et_password.setError("Password is required");
-            et_password.requestFocus();
+            et_password.setError("Password is required")
+            et_password.requestFocus()
         } else {
             mAuth.signInWithEmailAndPassword(et_email.text.toString(), et_password.text.toString())
                 .addOnCompleteListener { task ->
