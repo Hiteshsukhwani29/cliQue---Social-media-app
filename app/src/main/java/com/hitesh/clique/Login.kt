@@ -42,8 +42,13 @@ class Login : Fragment() {
 
         btn_login.setOnClickListener(View.OnClickListener { login() })
 
-        tv_createnewpassword.setOnClickListener(View.OnClickListener { requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container1, SignUp()).commit() })
+        tv_createnewpassword.setOnClickListener(View.OnClickListener {
+            val intent = Intent(activity, MainActivity2::class.java)
+            startActivity(intent)
+            /*
+                requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container1, SignUp()).commit() */
+        })
 
         return v
     }
